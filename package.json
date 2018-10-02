@@ -1,0 +1,41 @@
+{
+  "name": "greetings-node",
+  "version": "1.0.0",
+  "description": "Hello world app",
+  "main": "src/index.js",
+  "author": "Anton Raizvikh",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "newrelic": "^4.9.0"
+  },
+  "devDependencies": {
+    "artillery": "^1.6.0-24",
+    "eslint": "^5.6.1",
+    "jest": "^23.6.0",
+    "nsp": "^3.2.1",
+    "sonarqube-scanner-node": "^0.0.7"
+  },
+  "scripts": {
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "precommit": "yarn test",
+    "dev": "yarn run development",
+    "development": "APP_ENV=development NODE_ENV=development nodemon -w src -w swagger-docs src/index.js",
+    "start": "NODE_ENV=production node src/index.js",
+    "start:development": "APP_ENV=development yarn start",
+    "test": "yarn run lint && yarn run unit && yarn run security",
+    "test:sonarqube": "yarn run test && yarn run sonarqube",
+    "lint": "eslint 'src' --config .eslintrc",
+    "lint:fix": "yarn run lint --fix",
+    "load": "artillery run -o artillery_report.json -e ${APP_ENV:-'development'} load-test.yml",
+    "load:report": "artillery report artillery_report.json",
+    "load:verify": "yarn run load && node verify-load-test.js",
+    "unit": "jest",
+    "unit:watch": "jest --watchAll",
+    "integration": "jest --config=jest.integration.js",
+    "integration:watch": "jest --config=jest.integration.js --watchAll",
+    "security": "nsp check",
+    "commit": "git-cz",
+    "sonarqube": "sonarqube-scanner-node -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.projectVersion=${VERSION:-local}"
+  }
+}
