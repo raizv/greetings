@@ -68,33 +68,30 @@ items:
 
   # Configure our Docker container build
   # https://docs.openshift.com/enterprise/3.7/architecture/core_concepts/builds_and_image_streams.html#docker-build
-  # - kind: BuildConfig
-  #   apiVersion: v1
-  #   metadata:
-  #     name: ${APP_NAME}
-  #     labels:
-  #       app: ${APP_NAME}
-  #   spec:
-  #     source:
-  #       type: Git
-  #       git:
-  #         uri: ${REPO}
-  #         ref: ${BRANCH}
-  #       sourceSecret:
-  #         name: github-secret
-  #       secrets:
-  #         - secret:
-  #             name: npmrc-secret
-  #       runPolicy: Parallel
-  #     strategy:
-  #       type: Docker
-  #       dockerStrategy:
-  #         dockerfilePath: Dockerfile
-  #         forcePull: true
-  #     output:
-  #       to:
-  #         kind: ImageStreamTag
-  #         name: ${APP_NAME}:latest
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}
+      labels:
+        app: ${APP_NAME}
+    spec:
+      source:
+        type: Git
+        git:
+          uri: ${REPO}
+          ref: ${BRANCH}
+        sourceSecret:
+          name: github-secret
+        runPolicy: Parallel
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: Dockerfile
+          forcePull: true
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APP_NAME}:latest
 
 # Configure our deployment template
 # https://docs.openshift.com/enterprise/3.7/dev_guide/templates.html
