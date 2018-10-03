@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: List
 metadata:
-  name: greetings-node-pipeline
+  name: greetings-pipeline
 items:
 
 # Configure our Docker image repository
@@ -12,9 +12,9 @@ items:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: greetings-node
+    name: greetings
     labels:
-      app: greetings-node
+      app: greetings
 
 # Configure our build pipeline template
 # https://docs.openshift.com/enterprise/3.7/dev_guide/templates.html
@@ -24,7 +24,7 @@ items:
     name: greetings-pipeline
   parameters:
   - name: APP_NAME
-    value: greetings-node
+    value: greetings
   - name: REPO
     description: Git repo to pull from
     value: https://github.com/raizv/greetings-node.git
@@ -94,10 +94,10 @@ items:
 - apiVersion: v1
   kind: Template
   metadata:
-    name: greetings-node
+    name: greetings
   parameters:
   - name: APP_NAME
-    value: greetings-node
+    value: greetings
   - name: VERSION
     value: ''
   - name: ENVIRONMENT
