@@ -46,7 +46,7 @@ try {
   /*
    * Trigger the OpenShift Docker build, and store the resulting image, tagged with the GitHub commit.
    */
-  stage('Build') {
+  stage('Build Image') {
     build(
       name: 'greetings',
       buildVersion: buildVersion,
@@ -57,7 +57,7 @@ try {
   /*
    * Run the unit tests in a standalone pod. Test results will be uploaded to SonarQube.
    */
-  stage('Test') {
+  stage('Sonarqube Test') {
     test(
       name: 'greetings',
       buildVersion: buildVersion
@@ -119,24 +119,24 @@ catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) 
 }
 catch (err) {
   currentBuild.result = 'FAILURE'
-  // notifyBuild(
-  //   message:  'Build failed',
-  //   color: '#FF0000',
-  //   emoji: 'sadparrot',
-  //   buildVersion: buildVersion,
-  //   gitCommitMsg: gitCommitMsg
-  // )
+  notifyBuild(
+    message:  'Build failed',
+    color: '#FF0000',
+    emoji: 'sadparrot',
+    buildVersion: buildVersion,
+    gitCommitMsg: gitCommitMsg
+  )
   throw err
 }
 finally {
   if (currentBuild.result == 'SUCCESS') {
-    // notifyBuild(
-    //   message: 'Production deploy successful',
-    //   color: '#00FF00',
-    //   emoji: 'nyanparrot',
-    //   buildVersion: buildVersion,
-    //   gitCommitMsg: gitCommitMsg
-    // )
+    notifyBuild(
+      message: 'Production deploy successful',
+      color: '#00FF00',
+      emoji: 'nyanparrot',
+      buildVersion: buildVersion,
+      gitCommitMsg: gitCommitMsg
+    )
   }
 }
 
@@ -207,15 +207,15 @@ def loadTest(Map attrs) {
 
 def notifyBuild(Map attrs) {
   node {
-    // String route = sh(returnStdout: true, script: 'oc get route jenkins -o=\'jsonpath={.spec.host}\'').trim()
-    // String url = "https://${route}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
+    String route = sh(returnStdout: true, script: 'oc get route jenkins -o=\'jsonpath={.spec.host}\'').trim()
+    String url = "https://${route}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
 
-    // slackSend(
-    //   color: attrs.color,
-    //   message: "_${env.JOB_NAME}_ <${url}|${attrs.buildVersion}>\n*${attrs.message}* :${attrs.emoji}:\n```${attrs.gitCommitMsg}```",
-    //   teamDomain: 'teamDomain',
-    //   channel: 'channel',
-    //   token: env.SLACK_TOKEN
-    // )
+    slackSend(
+      color: attrs.color,
+      message: "_${env.JOB_NAME}_ <${url}|${attrs.buildVersion}>\n*${attrs.message}* :${attrs.emoji}:\n```${attrs.gitCommitMsg}```",
+      teamDomain: 'raizv',
+      channel: 'general',
+      token: env.SLACK_TOKEN
+    )
   }
 }
