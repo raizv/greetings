@@ -29,7 +29,7 @@
     "lint:fix": "npm run lint --fix",
     "load": "artillery run -o artillery_report.json -e ${APP_ENV:-'development'} load-test.yml",
     "load:report": "artillery report artillery_report.json",
-    "load:verify": "npm run load && node verify-load-test.js",
+    "load:verify": "npm run load && node load-test-verify.js",
     "unit": "jest",
     "unit:watch": "jest --watchAll",
     "integration": "jest --config=jest.integration.js",
