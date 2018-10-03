@@ -57,12 +57,12 @@ try {
   /*
    * Run the unit tests in a standalone pod. Test results will be uploaded to SonarQube.
    */
-  // stage('Test') {
-  //   test(
-  //     name: 'greetings',
-  //     buildVersion: buildVersion
-  //   )
-  // }
+  stage('Test') {
+    test(
+      name: 'greetings',
+      buildVersion: buildVersion
+    )
+  }
 
   /*
    * Deploy to staging environment.

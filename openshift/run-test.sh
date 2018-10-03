@@ -2,7 +2,7 @@
 set -o nounset -o errexit
 
 # Runs `yarn run test` against a container on OpenShift. Used by the Test stage of the Jenkinsfile.
-# Usage: ./run-test.sh api-starter-kit latest
+# Usage: ./run-test.sh app_name latest
 
 CONTAINER_NAME=${1}
 VERSION=${2:-latest}
@@ -19,7 +19,7 @@ oc run ${CONTAINER_NAME}-${VERSION} \
       "containers":[{
         "name": "'${CONTAINER_NAME}'-'${VERSION}'",
         "image": "'${IMAGESTREAM}':'${VERSION}'",
-        "command":["yarn", "run", "test:sonarqube"],
+        "command":["npm", "run", "test:sonarqube"],
         "env":[{
           "name":"VERSION",
           "value":"'${VERSION}'"
@@ -27,7 +27,7 @@ oc run ${CONTAINER_NAME}-${VERSION} \
           "name":"SONARQUBE_TOKEN",
           "valueFrom":{
             "secretKeyRef":{
-              "key": "sonar.login",
+              "key": "sonarqube-token",
               "name":"sonarqube-token-secret"
             }
           }
