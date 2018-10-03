@@ -1,0 +1,9 @@
+# Extends the base docker-compose.yml file for local development
+# Usage: docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d --build app
+
+version: '3'
+services:
+  api:
+    volumes:
+      - ./src:/app/src
+    command: run dev

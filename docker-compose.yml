@@ -1,0 +1,25 @@
+# Defines the local environment configuration for our application
+#
+# Usage:
+#   docker-compose build
+#   docker-compose up app
+#   docker-compose run app test
+#   docker-compose run load
+
+version: '3'
+services:
+  api:
+    container_name: app
+    build: .
+    environment:
+      - APP_ENV=development
+    ports:
+      - '8080:8080'
+  load:
+    container_name: app-load
+    build: .
+    command: run load:verify
+    environment:
+      - APP_ENV=docker
+    links:
+      - app

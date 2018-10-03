@@ -207,8 +207,6 @@ def notifyBuild(Map attrs) {
     String route = sh(returnStdout: true, script: 'oc get route jenkins -o=\'jsonpath={.spec.host}\'').trim()
     String url = "https://${route}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
 
-    slackSend(channel: '#general', color: 'good', message: 'Slack Message', teamDomain: 'raizv', token: env.SLACK_TOKEN)
-
     slackSend(
       color: attrs.color,
       message: "_${env.JOB_NAME}_ <${url}|${attrs.buildVersion}>\n*${attrs.message}* :${attrs.emoji}:\n```${attrs.gitCommitMsg}```",
