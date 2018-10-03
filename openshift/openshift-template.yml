@@ -58,6 +58,13 @@ items:
         type: JenkinsPipeline
         jenkinsPipelineStrategy:
           jenkinsfilePath: Jenkinsfile
+        env:
+          # newrelic_api_key is used in openshift/run-newrelic-notify.sh
+          - name: NEW_RELIC_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: newrelic-api-secret
+                key: newrelic-key
 
   # Configure our Docker container build
   # https://docs.openshift.com/enterprise/3.7/architecture/core_concepts/builds_and_image_streams.html#docker-build

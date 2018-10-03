@@ -1,7 +1,7 @@
 # Defines the production environment for our application
 
 FROM node:8-alpine
-
+EXPOSE 8080
 ENV HOME=/app
 WORKDIR /app
 RUN set -ex && \
@@ -23,6 +23,5 @@ RUN set -ex && \
     apk del g++ make python
 
 USER node
-EXPOSE 4000
 ENTRYPOINT ["yarn"]
 CMD ["start"]
