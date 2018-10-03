@@ -1,0 +1,19 @@
+config:
+  # Do NOT load test open routes (e.g. openshiftapps.com) as part of your pipeline.
+  # The production and staging environments can be reached from a load testing pod within the same OpenShift project.
+  environments:
+    production:
+      target: 'http://greetings-production:8080'
+    staging:
+      target: 'http://greetings-staging:8080'
+    docker:
+      target: 'http://app:8080'
+    development:
+      target: 'http://localhost:8080'
+  phases:
+    - duration: 15
+      arrivalRate: 50
+scenarios:
+  - flow:
+    - get:
+        url: "/"
