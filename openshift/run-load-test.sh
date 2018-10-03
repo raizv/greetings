@@ -20,7 +20,7 @@ oc run ${APP_NAME}-load-${ENVIRONMENT}-${VERSION} \
       "containers":[{
         "name": "'${APP_NAME}'-load-'${ENVIRONMENT}'-'${VERSION}'",
         "image": "'${IMAGESTREAM}':'${VERSION}'",
-        "command":["yarn", "run", "load:verify"],
+        "command":["npm", "run", "load:verify"],
         "env":[{
           "name":"APP_ENV",
           "value":"'${ENVIRONMENT}'"

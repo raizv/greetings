@@ -78,12 +78,12 @@ try {
   /*
    * Load test the staging environment.
    */
-  // stage('Load Test Staging') {
-  //   loadTest(
-  //     buildVersion: buildVersion,
-  //     environment: 'staging'
-  //   )
-  // }
+  stage('Load Test Staging') {
+    loadTest(
+      buildVersion: buildVersion,
+      environment: 'staging'
+    )
+  }
 
   /*
    * Prompt a developer to make the release.
