@@ -12,6 +12,7 @@
   "devDependencies": {
     "artillery": "^1.6.0-24",
     "eslint": "^5.6.1",
+    "expect": "^23.6.0",
     "jest": "^23.6.0",
     "sonarqube-scanner-node": "^0.0.7"
   },
