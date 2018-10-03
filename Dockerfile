@@ -13,15 +13,15 @@ RUN set -ex && \
       # sonar-scanner
       openjdk8-jre
 
-COPY package.json yarn.lock /app/
+COPY package.json package-lock.json /app/
 RUN set -ex && \
-    yarn install --pure-lockfile && \
-    yarn cache clean
+    npm install && \
+    npm cache clean
 COPY ./ /app/
 
 RUN set -ex && \
     apk del g++ make python
 
 USER node
-ENTRYPOINT ["yarn"]
+ENTRYPOINT ["npm"]
 CMD ["start"]
