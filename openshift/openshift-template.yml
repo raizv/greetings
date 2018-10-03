@@ -147,6 +147,8 @@ items:
                   value: "${APP_NAME} ${ENVIRONMENT}"
                 - name: NEW_RELIC_ENABLED
                   value: 'true'
+                - name: NEW_RELIC_NO_CONFIG_FILE
+                  value: 'true'
                 - name: NEW_RELIC_LICENSE_KEY
                   valueFrom:
                     secretKeyRef:
