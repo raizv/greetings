@@ -4,6 +4,7 @@ FROM node:8-alpine
 EXPOSE 8080
 ENV HOME=/app
 WORKDIR /app
+
 RUN set -ex && \
     adduser node root && \
     chmod g+w /app && \
@@ -14,9 +15,10 @@ RUN set -ex && \
       openjdk8-jre
 
 COPY package.json package-lock.json /app/
+
 RUN set -ex && \
-    npm install && \
-    npm cache clean
+    npm install
+
 COPY ./ /app/
 
 RUN set -ex && \
