@@ -186,6 +186,7 @@ def deploy(Map attrs) {
     unstash 'scripts'
     sh("""
       ./openshift/run-deploy.sh ${attrs.environment} ${attrs.buildVersion} ${attrs.numReplicas}
+      ./openshift/run-newrelic-notify.sh greetings ${attrs.environment} ${attrs.buildVersion}
     """)
 
     openshiftVerifyDeployment(
