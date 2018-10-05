@@ -27,7 +27,7 @@ items:
     value: greetings
   - name: REPO
     description: Git repo to pull from
-    value: https://github.com/raizv/greetings-node.git
+    value: https://github.com/raizv/greetings.git
   - name: BRANCH
     description: Branch to build from
     value: master

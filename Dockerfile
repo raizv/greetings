@@ -1,5 +1,3 @@
-# Defines the production environment for our application
-
 FROM node:8-alpine
 EXPOSE 8080
 ENV HOME=/app
