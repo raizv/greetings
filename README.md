@@ -50,11 +50,10 @@ gitCommitNum = git rev-list HEAD --count
 gitShortId = git rev-parse --short HEAD
 buildVersion = gitCommitNum + '-' + gitShortId
 ```
-That `buildVersion` is assigned to docker image and then promotes through Jenkins pipeline, so you always know what version of your has been deployed to production.
+That `buildVersion` is assigned to docker image and then promotes through Jenkins pipeline, so you always know what version has been deployed to production.
 
 
-### Infrastructure and required services provisioning as well as deployment is automated and can be
-triggered with a click of a button or a command in a terminal
+### Infrastructure and required services provisioning as well as deployment is automated and can be triggered with a click of a button or a command in a terminal
 
 [openshift-template][openshift-template] has all necessary objects for provisioning microservice - ImageStream, BuildConfig, DeploymentConfig, Service, Route and AutoScaler. Every change made to a code of application or code related to infrastructure will be applied and tested in CI/CD pipeline. If there is a breaking change - pipeline will fail in `Apply Template` step or in one of `Deployment ...` steps and it will prevent this change to affect production environment.
 
