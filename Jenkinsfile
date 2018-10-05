@@ -93,7 +93,7 @@ try {
   //     buildVersion: buildVersion,
   //     gitCommitMsg: gitCommitMsg
   //   )
-  //   timeout(time:1, unit:'DAYS') {
+  //   timeout(time:1, unit:'HOURS') {
   //     input 'Deploy to Production?'
   //   }
   // }
@@ -105,7 +105,7 @@ try {
     deploy(
       buildVersion: buildVersion,
       environment: 'production',
-      numReplicas: 1
+      numReplicas: 3
     )
   }
 

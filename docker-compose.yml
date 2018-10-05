@@ -8,7 +8,7 @@
 
 version: '3'
 services:
-  api:
+  app:
     container_name: app
     build: .
     environment:
