@@ -20,27 +20,27 @@ curl --header "Content-Type: application/json" --request POST --data '{"name":"A
 ### Ensure that changes to the source code can be automatically tested before they are deployed
 CI/CD pipeline is configured in [Jenkinsfile][Jenkinsfile].
 
-1. Checkout - pull source code and metadata from GitHub, assign `buildVersion` variable.
+1. *Checkout* - pull source code and metadata from GitHub, assign `buildVersion` variable.
 
-2. Apply Templates - create buildConfig and imageStream.
+2. *Apply Templates* - create buildConfig and imageStream.
 
-3. Build Image - build Docker Image, push to ImageStream and tag it with `buildVersion`, if image with that buildVersion already exist skip build and go to the next step.
+3. *Build Image* - build Docker Image, push to ImageStream and tag it with `buildVersion`, if image with that buildVersion already exist skip build and go to the next step.
 
-4. SonarQube Test - create docker container and execute test scripts from [package.json][package.json]. 
+4. *SonarQube Test* - create docker container and execute test scripts from [package.json][package.json]. 
     * lint: `eslint ...` 
     * unit: `jest `
     * security: `npm audit`
     * sonarqube: `sonarqube-scanner-node ...` run code quality and coverage tests and upload result to [sonarcloud.io](https://sonarcloud.io/dashboard?id=raizv_greetings-node)
 
-5. Deploy Staging - deploy to Staging environment, notify Newrelic about deployment and validate that deployment has been successful.
+5. *Deploy Staging* - deploy to Staging environment, notify Newrelic about deployment and validate that deployment has been successful.
 
-6. Load Test - test perfomance of microservice with [artillery](https://artillery.io/).
+6. *Load Test* - test perfomance of microservice with [artillery](https://artillery.io/).
 
-7. User Input - optional step, promt developer to make a deployment to production environment. 
+7. *User Input* - optional step, promt developer to make a deployment to production environment. 
 
-8. Deploy Production - deploy to Production environment, notify Newrelic about deployment and validate that deployment has been successful.
+8. *Deploy Production* - deploy to Production environment, notify Newrelic about deployment and validate that deployment has been successful.
 
-9. Notification to Slack - send notification message with build details to specified Slack channel.
+9. *Notification to Slack* - send notification message with build details to specified Slack channel.
 
 ### Specific version of the service can be launched for testing, debugging and demos
 
