@@ -1,19 +1,25 @@
-require('newrelic')
+require('newrelic');
 
-// const config = require('./config')
-// const server = require('./server')
-// const logger = require('./logger')
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const { version } = require('../package.json');
 
-const express = require('express')
-const app = express()
-const port = 8080
+const port = 8080;
+const app = express();
 
-app.get('/', (req, res) => res.send('Hello world!'))
+app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.post('/', (req, res) => res.send('Get POST req'))
+app.get('/', (req, res) => res.send('Hello world!'));
+app.get('/version', (req, res) => res.json({ version }));
 
-app.listen(port, () => console.log(`Greetings App is listening op port ${port} ...`))
+app.post('/', (req, res) => {
+  res.send(`Hello ${req.body.username} World!`);
+});
 
-// server.listen(process.env.PORT || config.port, () => {
-//     logger.info(`Started on port ${server.address().port}`)
-//   })
+
+app.listen(port, () => {
+  console.log(`Started on port ${port}`);
+});

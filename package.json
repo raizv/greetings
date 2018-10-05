@@ -6,26 +6,28 @@
   "author": "Anton Raizvikh",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "morgan": "^1.9.1",
     "newrelic": "^4.9.0"
   },
   "devDependencies": {
     "artillery": "^1.6.0-24",
     "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "expect": "^23.6.0",
     "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
     "sonarqube-scanner-node": "^0.0.7"
   },
   "scripts": {
-    "commitmsg": "commitlint -e $GIT_PARAMS",
-    "precommit": "npm test",
-    "dev": "npm run development",
-    "development": "APP_ENV=development NODE_ENV=development nodemon -w src -w swagger-docs src/index.js",
+    "dev": "APP_ENV=development NODE_ENV=development nodemon -w src -w swagger-docs src/index.js",
     "start": "NODE_ENV=production node src/index.js",
     "start:development": "APP_ENV=development npm start",
     "test": "npm run lint && npm run unit && npm run security",
     "test:sonarqube": "npm run sonarqube",
-    "lint": "eslint 'src' --config .eslintrc.json",
+    "lint": "eslint src",
     "lint:fix": "npm run lint --fix",
     "load": "artillery run -o artillery_report.json -e ${APP_ENV:-'development'} load-test.yml",
     "load:report": "artillery report artillery_report.json",
@@ -35,7 +37,6 @@
     "integration": "jest --config=jest.integration.js",
     "integration:watch": "jest --config=jest.integration.js --watchAll",
     "security": "npm audit",
-    "commit": "git-cz",
     "sonarqube": "sonarqube-scanner-node -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.projectVersion=${VERSION:-local}"
   }
 }

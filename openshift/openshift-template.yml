@@ -160,7 +160,7 @@ items:
                 timeoutSeconds: 1
               readinessProbe:
                 httpGet:
-                  path: /
+                  path: /version
                   port: 8080
                 initialDelaySeconds: 1
                 timeoutSeconds: 1
