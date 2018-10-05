@@ -15,8 +15,6 @@ POST request with a name of a person in the body returns "Hello {name} World!"
 curl --header "Content-Type: application/json" --request POST --data '{"name":"Anton"}' http://localhost:8080/
 ```
 
-## Your responsibility on the team is to:
-
 ### Ensure that changes to the source code can be automatically tested before they are deployed
 CI/CD pipeline is configured in [Jenkinsfile][Jenkinsfile].
 
