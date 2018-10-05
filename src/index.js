@@ -16,9 +16,8 @@ app.get('/', (req, res) => res.send('Hello world!'));
 app.get('/version', (req, res) => res.json({ version }));
 
 app.post('/', (req, res) => {
-  res.send(`Hello ${req.body.username} World!`);
+  res.send(`Hello ${req.body.name} World!`);
 });
-
 
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
