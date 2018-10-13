@@ -1,0 +1,9 @@
+node_modules
+.idea
+Dockerfile
+docker-compose.yml
+Jenkinsfile
+README.md
+.gitignore
+artillery_report*
+coverage
