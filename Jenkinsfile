@@ -54,7 +54,7 @@ try {
   /*
    * Run the unit tests in a standalone pod. Test results will be uploaded to SonarQube.
    */
-  stage('Sonarqube Test') {
+  stage('ESlint, Sonarqube and Security Tests') {
     test(
       name: 'greetings',
       buildVersion: buildVersion
