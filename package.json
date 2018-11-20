@@ -27,7 +27,7 @@
     "dev": "APP_ENV=development NODE_ENV=development nodemon -w src -w swagger-docs src/index.js",
     "start": "NODE_ENV=production node src/index.js",
     "start:development": "APP_ENV=development npm start",
-    "test": "npm run lint && npm run security",
+    "test": "npm run lint",
     "test:sonarqube": "npm run test && npm run sonarqube",
     "lint": "eslint src",
     "lint:fix": "npm run lint --fix",
