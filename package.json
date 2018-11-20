@@ -7,7 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "mongodb": "^3.1.8",
     "morgan": "^1.9.1",
     "newrelic": "^4.9.0"
   },
@@ -36,7 +38,7 @@
     "unit:watch": "jest --watchAll",
     "integration": "jest --config=jest.integration.js",
     "integration:watch": "jest --config=jest.integration.js --watchAll",
-    "security": "npm audit",
+    "security": "npm audit --dry-run",
     "sonarqube": "sonarqube-scanner-node -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.projectVersion=${VERSION:-local}"
   }
 }
