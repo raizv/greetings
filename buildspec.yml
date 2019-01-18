@@ -1,16 +1,19 @@
+# Start build
+# aws codebuild start-build --project-name project-name
+#
+# Create webhook
+# aws codebuild create-webhook --project-name 
+#
 version: 0.2
 
 phases:
   pre_build:
     commands:
-      - APP_NAME=${APP_NAME:=default_name}
-      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:=us-west-2}
-      # Read ECR from env variable
-      # - ECR=916944610881.dkr.ecr.us-west-2.amazonaws.com
-      - ECR=${ECR}
-      - echo Logging in to Amazon ECR $ECR...
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=$ECR/$APP_NAME
+      - REPOSITORY_URI=${REPOSITORY_URI:=repository_uri_not_defined}
+      - AWS_REGION=${AWS_REGION:=us-west-2}
+      #
+      - echo Logging in to Amazon ECR $REPOSITORY_URI...
+      - $(aws ecr get-login --region $AWS_REGION --no-include-email)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
