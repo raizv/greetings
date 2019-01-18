@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:10-alpine
 EXPOSE 8080
 ENV HOME=/app
 WORKDIR /app

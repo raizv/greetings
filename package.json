@@ -21,7 +21,7 @@
     "expect": "^23.6.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.4",
-    "sonarqube-scanner-node": "^0.0.7"
+    "sonarqube-scanner-node": "^0.0.10"
   },
   "scripts": {
     "dev": "APP_ENV=development NODE_ENV=development nodemon -w src -w swagger-docs src/index.js",
