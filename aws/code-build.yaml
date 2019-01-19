@@ -1,0 +1,73 @@
+Parameters:    
+  appName:
+    Type: String
+
+Resources:
+  MyRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Ref appName
+
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: greetings-created-from-cf
+      ServiceRole: !Ref CodeBuildRole
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/docker:18.09.0
+        # TODO: move ENV variables values outside of CF template
+        EnvironmentVariables:
+          - Name: APP_NAME
+            Value: !Ref appName
+            Type: PLAINTEXT
+          - Name: REPOSITORY_URI
+            Value: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${appName}"
+            Type: PLAINTEXT
+          - Name: AWS_REGION
+            Value: 'us-west-2'
+            Type: PLAINTEXT
+      Source:
+        Location: 'https://github.com/raizv/greetings'
+        Type: GITHUB
+      TimeoutInMinutes: 10
+      # Cache:
+      #   Type: S3
+      #   Location: mybucket/prefix
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codebuild.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                - 'logs:*'
+                - 'ecr:BatchCheckLayerAvailability'
+                - 'ecr:CompleteLayerUpload'
+                - 'ecr:GetAuthorizationToken'
+                - 'ecr:InitiateLayerUpload'
+                - 'ecr:PutImage'
+                - 'ecr:UploadLayerPart'
+                # - 'ec2:CreateNetworkInterface'
+                # - 'ec2:DescribeNetworkInterfaces'
+                # - 'ec2:DeleteNetworkInterface'
+                # - 'ec2:DescribeSubnets'
+                # - 'ec2:DescribeSecurityGroups'
+                # - 'ec2:DescribeDhcpOptions'
+                # - 'ec2:DescribeVpcs'
+                # - 'ec2:CreateNetworkInterfacePermission'
+                Effect: Allow
+                Resource: '*'
