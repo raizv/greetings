@@ -72,6 +72,13 @@ try {
     )
   }
 
+  stage('Notify Newrelic') {
+    deploy(
+      buildVersion: buildVersion,
+      environment: 'staging'
+    )
+  }
+
   /*
    * Load test the staging environment.
    */
@@ -85,18 +92,18 @@ try {
   /*
    * Prompt a developer to make the release.
    */
-  // stage('User Input') {
-  //   notifyBuild(
-  //     message: 'Build is ready for Production',
-  //     color: '#0000FF',
-  //     emoji: 'shipitparrot',
-  //     buildVersion: buildVersion,
-  //     gitCommitMsg: gitCommitMsg
-  //   )
-  //   timeout(time:1, unit:'HOURS') {
-  //     input 'Deploy to Production?'
-  //   }
-  // }
+  stage('User Input') {
+    notifyBuild(
+      message: 'Build is ready for Production',
+      color: '#0000FF',
+      emoji: 'shipitparrot',
+      buildVersion: buildVersion,
+      gitCommitMsg: gitCommitMsg
+    )
+    timeout(time:1, unit:'HOURS') {
+      input 'Deploy to Production?'
+    }
+  }
 
   /*
    * Deploy to production environment.
@@ -106,6 +113,13 @@ try {
       buildVersion: buildVersion,
       environment: 'production',
       numReplicas: 3
+    )
+  }
+
+  stage('Notify Newrelic') {
+    deploy(
+      buildVersion: buildVersion,
+      environment: 'production'
     )
   }
 
@@ -181,15 +195,19 @@ def test(Map attrs) {
 def deploy(Map attrs) {
   node {
     unstash 'scripts'
-    sh("""
-      ./openshift/run-deploy.sh ${attrs.environment} ${attrs.buildVersion} ${attrs.numReplicas}
-      ./openshift/run-newrelic-notify.sh greetings ${attrs.environment} ${attrs.buildVersion}
-    """)
+    sh("./openshift/run-deploy.sh ${attrs.environment} ${attrs.buildVersion} ${attrs.numReplicas}")
 
     openshiftVerifyDeployment(
       deploymentConfig: "greetings-${attrs.environment}",
       waitTime: '1800000'
     )
+  }
+}
+
+def notifyNewrelic(Map attrs) {
+  node {
+    unstash 'scripts'
+    sh("./openshift/run-newrelic-notify.sh greetings ${attrs.environment} ${attrs.buildVersion}")
   }
 }
 
@@ -210,6 +228,7 @@ def notifyBuild(Map attrs) {
     slackSend(
       color: attrs.color,
       message: "_${env.JOB_NAME}_ <${url}|${attrs.buildVersion}>\n*${attrs.message}* :${attrs.emoji}:\n```${attrs.gitCommitMsg}```",
+      // TODO: use variables for teamDomain and slackChannel
       teamDomain: 'raizv',
       channel: '#notifications',
       token: env.SLACK_TOKEN
