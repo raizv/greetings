@@ -8,7 +8,7 @@ metadata:
     owner: {{ .Values.owner }}
     environment: {{ .Values.environment }}
 spec:
-  progressDeadlineSeconds: 180
+  progressDeadlineSeconds: 60
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
@@ -27,17 +27,17 @@ spec:
               value: NON_SUPPORTED_ENV
           ports:
             - containerPort: 8080
-          livenessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 1
-            timeoutSeconds: 1
-          readinessProbe:
-            httpGet:
-              path: /version
-              port: 8080
-            initialDelaySeconds: 1
-            timeoutSeconds: 1
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
+          # readinessProbe:
+          #   httpGet:
+          #     path: /version
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
           resources:
             requests:
               cpu: 80m
