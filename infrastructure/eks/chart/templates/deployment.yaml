@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: APP_ENV
-              value: production
+              value: NON_SUPPORTED_ENV
           ports:
             - containerPort: 8080
           livenessProbe:
