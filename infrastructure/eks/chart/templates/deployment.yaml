@@ -25,7 +25,7 @@ spec:
           env:
             - name: APP_ENV
               # step 1: update env variable to break the app
-              value: asdf
+              value: {{ .Values.image.version }}
           ports:
             - containerPort: 8080
           # step 2: disable health checks
