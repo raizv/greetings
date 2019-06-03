@@ -24,9 +24,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: APP_ENV
-              value: production
+              # step 1: update env variable to break the app
+              value: non_valid_name
           ports:
             - containerPort: 8080
+          # step 2: disable health checks
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -38,10 +40,10 @@ spec:
               port: 8080
             initialDelaySeconds: 1
             timeoutSeconds: 1
-          resources:
-            requests:
-              cpu: 80m
-              memory: 32Mi
-            limits:
-              cpu: 100m
-              memory: 100Mi
+          # resources:
+          #   requests:
+          #     cpu: 80m
+          #     memory: 32Mi
+          #   limits:
+          #     cpu: 100m
+          #     memory: 100Mi
