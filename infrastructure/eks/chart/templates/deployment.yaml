@@ -25,21 +25,21 @@ spec:
           env:
             - name: APP_ENV
               # step 1: update env variable to break the app
-              value: asdfasdf
+              value: production
           ports:
             - containerPort: 8080
           # step 2: disable health checks
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: 8080
-          #   initialDelaySeconds: 1
-          #   timeoutSeconds: 1
-          # readinessProbe:
-          #   httpGet:
-          #     path: /version
-          #     port: 8080
-          #   initialDelaySeconds: 1
-          #   timeoutSeconds: 1
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 8080
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
           # resources:
           #   requests:
           #     cpu: 80m
