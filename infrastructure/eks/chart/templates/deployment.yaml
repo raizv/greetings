@@ -25,7 +25,7 @@ spec:
           env:
             - name: APP_ENV
               # step 1: update env variable to break the app
-              value: production
+              value: asdfasdf
           ports:
             - containerPort: 8080
           # step 2: disable health checks
