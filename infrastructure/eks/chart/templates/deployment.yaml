@@ -28,17 +28,17 @@ spec:
               # value: production
           ports:
             - containerPort: 8080
-          livenessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 1
-            timeoutSeconds: 1
-          readinessProbe:
-            httpGet:
-              path: /version
-              port: 8080
-            initialDelaySeconds: 1
-            timeoutSeconds: 1
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
+          # readinessProbe:
+          #   httpGet:
+          #     path: /version
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
           resources:
             requests:
               cpu: 80m
