@@ -8,7 +8,7 @@ metadata:
     owner: {{ .Values.owner }}
     environment: {{ .Values.environment }}
 spec:
-  # progressDeadlineSeconds: 60
+  progressDeadlineSeconds: 90
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
@@ -41,10 +41,10 @@ spec:
           #     port: 8080
           #   initialDelaySeconds: 1
           #   timeoutSeconds: 1
-          # resources:
-          #   requests:
-          #     cpu: 80m
-          #     memory: 32Mi
-          #   limits:
-          #     cpu: 100m
-          #     memory: 100Mi
+          resources:
+            requests:
+              cpu: 80m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
