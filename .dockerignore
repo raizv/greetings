@@ -1,5 +1,8 @@
+aws
+openshift
 node_modules
 .idea
+buildspec.yml
 Dockerfile
 docker-compose.yml
 Jenkinsfile
@@ -7,3 +10,4 @@ README.md
 .gitignore
 artillery_report*
 coverage
+infrastructure

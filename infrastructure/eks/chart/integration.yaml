@@ -1,0 +1,3 @@
+environment: integration
+replicas: 2
+region: us-west-2

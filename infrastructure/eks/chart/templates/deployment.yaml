@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+  annotations:
+    owner: {{ .Values.owner }}
+    environment: {{ .Values.environment }}
+spec:
+  progressDeadlineSeconds: 90
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.version }}"
+          imagePullPolicy: Always
+          env:
+            - name: APP_ENV
+              value: produ
+          ports:
+            - containerPort: 8080
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
+          # readinessProbe:
+          #   httpGet:
+          #     path: /version
+          #     port: 8080
+          #   initialDelaySeconds: 1
+          #   timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 80m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
