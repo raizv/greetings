@@ -13,8 +13,8 @@ workflows:
   deploy:
     jobs:
       - eks/deploy:
-          cluster-name: cluster-name
-          region: region
+          cluster-name: cluster-1
+          region: us-west-2
           steps:
             - run:
                 command: |
