@@ -2,24 +2,10 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
 workflows:
-  # build-and-deploy:
-  #   jobs:
-  #     - aws-ecr/build_and_push_image:
-  #         account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-  #         repo: "${AWS_RESOURCE_NAME_PREFIX}"
-  #         region: ${AWS_DEFAULT_REGION}
-  #         tag: "${CIRCLE_SHA1}"
   build-and-push-image:
     jobs:
       - aws-ecr/build-and-push-image:
           account-url: AWS_ACCOUNT_URL
-          # aws-access-key-id: ACCESS_KEY_ID
-          # aws-secret-access-key: SECRET_ACCESS_KEY
-          # context: myContext
-          # create-repo: true
-          # dockerfile: myDockerfile
-          # path: pathToMyDockerfile
-          # profile-name: myProfileName
           region: AWS_DEFAULT_REGION
-          repo: AWS_RESOURCE_NAME_PREFIX
-          tag: CIRCLE_SHA1
+          repo: greetings
+          tag: "${CIRCLE_SHA1},latest"
