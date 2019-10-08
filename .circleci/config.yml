@@ -9,7 +9,7 @@ workflows:
   #         repo: "${AWS_RESOURCE_NAME_PREFIX}"
   #         region: ${AWS_DEFAULT_REGION}
   #         tag: "${CIRCLE_SHA1}"
-  build_and_push_image:
+  build-and-push-image:
     jobs:
       - aws-ecr/build-and-push-image:
           account-url: "916944610881.dkr.ecr.us-west-2.amazonaws.com"
