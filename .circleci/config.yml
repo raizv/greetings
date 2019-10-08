@@ -12,7 +12,7 @@ workflows:
   build-and-push-image:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: "916944610881.dkr.ecr.us-west-2.amazonaws.com"
+          account-url: AWS_ACCOUNT_URL
           # aws-access-key-id: ACCESS_KEY_ID
           # aws-secret-access-key: SECRET_ACCESS_KEY
           # context: myContext
@@ -20,6 +20,6 @@ workflows:
           # dockerfile: myDockerfile
           # path: pathToMyDockerfile
           # profile-name: myProfileName
-          region: "us-west-2"
-          repo: greetings
+          region: AWS_DEFAULT_REGION
+          repo: AWS_RESOURCE_NAME_PREFIX
           tag: CIRCLE_SHA1
