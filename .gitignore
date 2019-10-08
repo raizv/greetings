@@ -9,3 +9,4 @@ npm-debug.log
 yarn-error.log
 artillery_report*
 .vscode
+.terraform

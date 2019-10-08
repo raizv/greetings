@@ -1,11 +1,11 @@
-# Default values for dripw.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 name: greetings
 
-owner: conversions
-
 image:
-  repository: raizv/greetings
+  repository: 916944610881.dkr.ecr.us-west-2.amazonaws.com/greetings
   version: latest
+
+service:
+  port: 8080
+
+ingress:
+  host: "greetings.cluster1.aws.raizv.net"
