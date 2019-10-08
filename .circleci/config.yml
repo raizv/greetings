@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
+  eks: tiendanube/eks@1.0.0
 workflows:
   build-and-push-image:
     jobs:
@@ -9,3 +10,16 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: greetings
           tag: "${CIRCLE_SHA1},latest"
+  deploy:
+    jobs:
+      - eks/deploy:
+          cluster-name: cluster-name
+          region: region
+          steps:
+            - run:
+                command: |
+                  helm template chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
+
+              # aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
+              # kubectl get ns
+              # helm template chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
