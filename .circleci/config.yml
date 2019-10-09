@@ -24,13 +24,4 @@ jobs:
       - checkout
       - run: |
           aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
-          helm template eks/chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
-
-# workflows:
-#   build-and-push-image:
-#     jobs:
-#       - aws-ecr/build-and-push-image:
-#           account-url: AWS_ACCOUNT_URL
-#           region: AWS_DEFAULT_REGION
-#           repo: greetings
-#           tag: "${CIRCLE_SHA1},latest"
+          helm template eks/chart -f eks/chart/production.yaml --set image.version=${CIRCLE_SHA1} | kubectl apply -f - -n trguest
