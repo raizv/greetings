@@ -18,9 +18,10 @@ jobs:
       - image: raizv/cli
     steps:
       - checkout
-      - run: aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
-      - run: kubectl get ns
-      - run: helm template chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
+      - run: |
+          aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
+          kubectl get ns
+          helm template eks/chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
 
 # workflows:
 #   build-and-push-image:
