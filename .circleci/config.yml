@@ -1,6 +1,19 @@
 version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.4.0
+
+workflows:
+  version: 2
+  one_and_two:
+    jobs:
+      - one
+      # - two:
+      #     requires:
+      #       - one
+
 jobs:
-  deploy:
+  one:
     docker:
       - image: raizv/cli
     steps:
@@ -8,8 +21,7 @@ jobs:
       - run: aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
       - run: kubectl get ns
       - run: helm template chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
-# orbs:
-#   aws-ecr: circleci/aws-ecr@6.4.0
+
 # workflows:
 #   build-and-push-image:
 #     jobs:
@@ -18,7 +30,3 @@ jobs:
 #           region: AWS_DEFAULT_REGION
 #           repo: greetings
 #           tag: "${CIRCLE_SHA1},latest"
-
-
-
-
