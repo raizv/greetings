@@ -7,10 +7,14 @@ workflows:
   version: 2
   one_and_two:
     jobs:
-      - one
-      # - two:
-      #     requires:
-      #       - one
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ACCOUNT_URL
+          region: AWS_DEFAULT_REGION
+          repo: greetings
+          tag: "${CIRCLE_SHA1},latest"
+      - deploy
+          requires:
+            - aws-ecr/build-and-push-image
 
 jobs:
   one:
@@ -20,7 +24,6 @@ jobs:
       - checkout
       - run: |
           aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
-          kubectl get ns
           helm template eks/chart -f eks/chart/production.yaml | kubectl apply -f - -n trguest
 
 # workflows:
