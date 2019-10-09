@@ -24,4 +24,5 @@ jobs:
       - checkout
       - run: |
           aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name cluster-1
-          helm template eks/chart -f eks/chart/production.yaml --set image.version=${CIRCLE_SHA1} | kubectl apply -f - -n trguest
+          helm template eks/chart -f eks/chart/production.yaml --set image.version=${CIRCLE_SHA1}|kubectl apply -f - -n trguest
+          kubectl rollout status deployment/greetings -w
