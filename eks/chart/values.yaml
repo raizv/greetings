@@ -8,4 +8,5 @@ service:
   port: 8080
 
 ingress:
-  host: "greetings.cluster1.aws.raizv.net"
+  domain: aws.raizv.net
+  # host: greetings.stage.aws.raizv.net

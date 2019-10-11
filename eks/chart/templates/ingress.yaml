@@ -7,9 +7,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
+    # external-dns.alpha.kubernetes.io/hostname: {{ .Values.name }}.{{ .Values.environment }}.{{ .Values.domain }}
 spec:
   rules:
-    # - host: greetings.cluster1.aws.raizv.net
+    # - host: {{ .Values.name }}.{{ .Values.environment }}.{{ .Values.domain }}
     - http:
         paths:
           - path: /*
