@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greetings
+spec:
+  replicas: 1
+  template:
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: greetings
+          image: raizv/greetings
+          env:
+            - name: APP_ENV
+              value: APP_ENV
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 8080
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

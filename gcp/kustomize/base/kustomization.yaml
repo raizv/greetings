@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  app: greetings
+
+namespace: greetings
+
+# kustomize edit set image image:tag
+images:
+- name: raizv/greetings
+  newTag: 1.0.4
+
+resources:
+- deployment.yaml
+- service.yaml
+- ingress.yaml

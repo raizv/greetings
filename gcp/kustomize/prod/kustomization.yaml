@@ -1,0 +1,9 @@
+resources:
+- ./../base
+
+patchesStrategicMerge:
+- env_vars.yaml
+
+replicas:
+- name: greetings
+  count: 3
