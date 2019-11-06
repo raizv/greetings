@@ -14,6 +14,8 @@ spec:
       labels:
         app: {{ .Values.name }}
     spec:
+      securityContext:
+        runAsUser: 1000
       containers:
         - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.version }}"
@@ -35,8 +37,8 @@ spec:
             timeoutSeconds: 1
           resources:
             requests:
-              cpu: 80m
-              memory: 32Mi
+              cpu: 50m
+              memory: 128Mi
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 150m
+              memory: 128Mi

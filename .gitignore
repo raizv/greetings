@@ -10,3 +10,4 @@ yarn-error.log
 artillery_report*
 .vscode
 .terraform
+*private*
