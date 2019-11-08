@@ -14,6 +14,10 @@ spec:
           env:
             - name: APP_ENV
               value: APP_ENV
+            # - name: GOOGLE_APPLICATION_CREDENTIALS
+            #   value: path-to-your-service-accounts-private-key
+            # - name: GCLOUD_PROJECT
+            #   value: your-project-id
           ports:
             - containerPort: 8080
           livenessProbe:
