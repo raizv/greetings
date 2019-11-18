@@ -1,11 +1,8 @@
-FROM node:10-alpine
+FROM node:10-alpine as build
 ENV HOME=/app
 WORKDIR /app
 
-RUN set -ex && \
-    adduser node root && \
-    chmod g+w /app && \
-    apk add --update --no-cache \
+RUN apk add --update --no-cache \
       # newrelic
       g++ make python \
       # sonar-scanner
@@ -18,6 +15,14 @@ RUN set -ex && \
 
 COPY ./ /app/
 
+FROM node:10-alpine
+COPY --from=build /app /app
+
+RUN set -ex && \
+    adduser node root && \
+    chmod g+w /app
+
+WORKDIR /app
 EXPOSE 8080
 USER node
 CMD [ "npm", "start" ]
