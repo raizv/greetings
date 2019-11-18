@@ -1,4 +1,4 @@
-FROM node:10-alpine as build
+FROM node:10-alpine
 ENV HOME=/app
 WORKDIR /app
 
@@ -16,10 +16,6 @@ COPY package.json package-lock.json /app/
 RUN set -ex && \
     npm install
 
-FROM node:10-alpine
-COPY --from=build /app /app
-
-WORKDIR /app
 EXPOSE 8080
 USER node
 ENTRYPOINT ["npm"]
