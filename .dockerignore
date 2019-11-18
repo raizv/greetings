@@ -4,7 +4,7 @@ openshift
 node_modules
 .idea
 buildspec.yml
-Dockerfile
+Dockerfile*
 docker-compose.yml
 Jenkinsfile
 README.md
@@ -12,3 +12,6 @@ README.md
 artillery_report*
 coverage
 infrastructure
+terraform
+eks
+cloudbuild.yaml
