@@ -16,7 +16,8 @@ COPY package.json package-lock.json /app/
 RUN set -ex && \
     npm install
 
+COPY ./ /app/
+
 EXPOSE 8080
 USER node
-ENTRYPOINT ["npm"]
-CMD ["start"]
+CMD [ "npm", "start" ]
