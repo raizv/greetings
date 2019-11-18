@@ -17,7 +17,7 @@ RUN set -ex && \
     npm install
 
 FROM node:10-alpine
-COPY --from=build /app /
+COPY --from=build /app /app
 
 EXPOSE 8080
 USER node
