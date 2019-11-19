@@ -16,6 +16,7 @@ RUN set -ex && \
 COPY ./ /app/
 
 FROM node:10-alpine
+ENV HOME=/app
 COPY --from=build /app /app
 
 RUN set -ex && \
