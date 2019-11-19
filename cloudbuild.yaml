@@ -1,20 +1,46 @@
 steps:
-- id: build
+# build image
+- id: docker-build
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', '.' ]
-- id: tag
+
+# tag image with git short_sha
+- id: docker-tag
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'tag', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', 'gcr.io/$PROJECT_ID/greetings:latest' ]
   wait_for: ['build']
+
+# test image
 - id: test
   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
-  args: ['npx', 'eslint', 'src']
+  args: ['npx', '-v']
   env:
   - 'HOME=/app'
   wait_for: ['tag']
-# - id: deploy
-#   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
-#   args: ['npm', 'test']
-#   wait_for: ['test']
+
+# push image to registry
+- id: docker-push
+  name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA' ]
+  wait_for: ['test']
+
+# render template for DEV environment
+- id: helm-template
+  name: 'gcr.io/cloud-builders/helmfile'
+  args: [ 'helm', 'version' ]
+  env:
+  - CLOUDSDK_COMPUTE_REGION=us-west1
+  - CLOUDSDK_CONTAINER_CLUSTER=development
+  wait_for: ['docker-push']
+
+
+# deploy to DEV environment
+# - name: "gcr.io/cloud-builders/gke-deploy:stable"
+#   args:
+#   - run
+#   - --filename=template.yaml
+#   - --location=us-west1
+#   - --cluster=development
+#   wait_for: ['docker-push']
 images:
 - 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
