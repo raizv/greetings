@@ -1,5 +1,7 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/greetings', '.' ]
+- id: build
+  name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', '.' ]
 images:
-- 'gcr.io/$PROJECT_ID/greetings'
+- 'gcr.io/$PROJECT_ID/greetings:latest'
+- 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
