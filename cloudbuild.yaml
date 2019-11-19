@@ -2,13 +2,17 @@ steps:
 - id: build
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', '.' ]
+- id: tag
+  name: 'gcr.io/cloud-builders/docker'
+  args: [ 'tag', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', 'gcr.io/$PROJECT_ID/greetings:latest' ]
+  wait_for: ['build']
 - id: test
   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
   args: ['npm', 'run', 'test']
-  wait_for: ['build']
-- id: deploy
-  name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
-  args: ['npm', 'test']
-  wait_for: ['build']
+  wait_for: ['tag']
+# - id: deploy
+#   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
+#   args: ['npm', 'test']
+#   wait_for: ['test']
 images:
 - 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
