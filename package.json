@@ -30,7 +30,7 @@
     "start:development": "APP_ENV=development npm start",
     "test": "npm run lint",
     "test:sonarqube": "npm run test && npm run sonarqube",
-    "lint": "npx eslint src",
+    "lint": "eslint src",
     "lint:fix": "npm run lint --fix",
     "load": "artillery run -o artillery_report.json -e ${APP_ENV:-'development'} load-test.yml",
     "load:report": "artillery report artillery_report.json",
