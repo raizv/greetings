@@ -9,6 +9,8 @@ steps:
 - id: test
   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
   args: ['npm', 'run', 'test']
+  env:
+  - 'HOME=/app'
   wait_for: ['tag']
 # - id: deploy
 #   name: 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
