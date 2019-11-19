@@ -23,8 +23,6 @@ RUN set -ex && \
     adduser node root && \
     chmod g+w /app
 
-RUN touch /app/im_inside_container
-
 WORKDIR /app
 EXPOSE 8080
 USER node
