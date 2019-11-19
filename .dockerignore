@@ -1,9 +1,12 @@
 aws
 gcp
+eks
+helm
 openshift
 node_modules
 .idea
 buildspec.yml
+cloudbuild.yaml
 Dockerfile*
 docker-compose.yml
 Jenkinsfile
@@ -11,7 +14,4 @@ README.md
 .gitignore
 artillery_report*
 coverage
-infrastructure
 terraform
-eks
-cloudbuild.yaml
