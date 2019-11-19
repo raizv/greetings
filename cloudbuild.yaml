@@ -8,7 +8,7 @@ steps:
 - id: docker-tag
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'tag', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA', 'gcr.io/$PROJECT_ID/greetings:latest' ]
-  wait_for: ['build']
+  wait_for: ['docker-build']
 
 # test image
 - id: test
@@ -16,7 +16,7 @@ steps:
   args: ['npx', '-v']
   env:
   - 'HOME=/app'
-  wait_for: ['tag']
+  wait_for: ['docker-tag']
 
 # push image to registry
 - id: docker-push
