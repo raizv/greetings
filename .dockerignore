@@ -12,6 +12,7 @@ docker-compose.yml
 Jenkinsfile
 README.md
 .gitignore
+.dockerignore
 artillery_report*
 coverage
 terraform

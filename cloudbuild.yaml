@@ -40,13 +40,8 @@ steps:
 
 # render template for DEV environment
 - id: template
-  name: 'gcr.io/$PROJECT_ID/helmfile'
-  args: [
-    'template', 'greetings', 
-    '--values', 'greetings/dev.yaml', 
-    '--set', 'projectId=$PROJECT_ID', 
-    '--set', 'appVersion=$SHORT_SHA'
-  ]
+  name: 'gcr.io/$PROJECT_ID/helm'
+  args: ['template', 'greetings', '--values', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development-us-west1
