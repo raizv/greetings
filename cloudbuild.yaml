@@ -33,10 +33,25 @@ steps:
   args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA' ]
   wait_for: ['test']
 
+- id: push-latest
+  name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:latest' ]
+
 # render template for DEV environment
 - id: template
   name: 'gcr.io/$PROJECT_ID/helmfile'
-  args: ['helm', 'template', 'greetings', '-f', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
+  args: ['helm', 'version']
+  # args: [
+  #   'helm', 
+  #   'template', 
+  #   'greetings', 
+  #   '-f', 
+  #   'greetings/dev.yaml', 
+  #   '--set', 
+  #   'projectId=$PROJECT_ID', 
+  #   '--set', 
+  #   'appVersion=$SHORT_SHA'
+  # ]
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development-us-west1
