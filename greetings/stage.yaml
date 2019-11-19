@@ -1,0 +1,3 @@
+environment: stage
+replicas: 2
+gcp_service_account: "development-gke@development-96970d14.iam.gserviceaccount.com"

@@ -1,9 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: greetings
+  name: ing
+  annotations:
+    networking.gke.io/managed-certificates: greetings
+    # the name of the SSL certificate resource you created
+    # ingress.gcp.kubernetes.io/pre-shared-cert: dev-us-west1
+    # the name of the static ip resource
+    # kubernetes.io/ingress.global-static-ip-name: my-static-ip 
+    kubernetes.io/ingress.allow-http: "false"
 spec:
   rules:
+    # - host: greetings-dev-us-west1.gcp.raizv.ca
     - http:
         paths:
           - path: /*

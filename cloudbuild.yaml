@@ -27,7 +27,7 @@ steps:
 # render template for DEV environment
 - id: template
   name: 'gcr.io/cloud-builders/helm'
-  args: [ 'helm', 'version' ]
+  args: ['helm', 'template', 'greetings', '-f', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development

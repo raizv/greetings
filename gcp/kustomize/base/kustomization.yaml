@@ -9,9 +9,10 @@ namespace: greetings
 # kustomize edit set image image:tag
 images:
 - name: raizv/greetings
-  newTag: 2c5f6a9
+  newTag: cdfb8de
 
 resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
+- service-account.yaml

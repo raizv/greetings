@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1beta1
+kind: ManagedCertificate
+metadata:
+  name: greetings
+  namespace: greetings
+spec:
+  domains:
+    - ing-greetings.dev-us-west1.raizv.ca

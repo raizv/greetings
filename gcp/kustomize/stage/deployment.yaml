@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greetings
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: greetings
+          env:
+            - name: APP_ENV
+              value: stage
