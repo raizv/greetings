@@ -1,4 +1,5 @@
 steps:
+# build image
 - id: build
   name: 'gcr.io/kaniko-project/executor'
   args: [
@@ -6,14 +7,6 @@ steps:
     '--cache=true',
     '--cache-ttl=12h',
     '--verbosity=error' ]
-
-# build image
-# - id: build
-#   name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', 
-#     '-t', 'gcr.io/$PROJECT_ID/greetings:latest',
-#     '-t', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA',
-#     '--cache-from', 'gcr.io/$PROJECT_ID/greetings:latest', '.' ]
 
 # test image
 - id: test
@@ -40,10 +33,10 @@ steps:
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development-us-west1
-  wait_for: ['build']
+  wait_for: ['test']
 
 # deploy to DEV environment
 - id: deploy-dev
   name: 'gcr.io/cloud-builders/gke-deploy'
-  args: ['apply', '--filename=.', '--location=us-west1', '--cluster=development-us-west1']
+  args: ['apply', '--filename=greetings/templates', '--location=us-west1', '--cluster=development-us-west1']
   wait_for: ['template']
