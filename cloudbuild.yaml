@@ -34,7 +34,10 @@ steps:
 - id: deploy-dev
   name: 'gcr.io/cloud-builders/gke-deploy'
   args: [
-    'apply', '--filename=greetings/templates', 
+    'run',
+    # 'apply',
+    '--filename=greetings/templates',
+    '--namespace=trguest',
     '--location=us-west1', 
     '--cluster=development-us-west1']
   wait_for: ['template']
