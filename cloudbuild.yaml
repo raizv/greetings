@@ -50,7 +50,7 @@ steps:
 - id: template
   name: 'gcr.io/$PROJECT_ID/helm'
   args: ['template', 'greetings', 
-    '--output-dir', 'templates', 
+    '--output-dir', '/workspace/templates', 
     '--values', 'greetings/dev.yaml', 
     '--set', 'projectId=$PROJECT_ID', 
     '--set', 'appVersion=$SHORT_SHA']
@@ -62,7 +62,7 @@ steps:
 # deploy to DEV environment
 - id: deploy-dev
   name: 'gcr.io/cloud-builders/gke-deploy'
-  args: ['apply', '--filename=templates', '--location=us-west1', '--cluster=development-us-west1']
+  args: ['apply', '--filename=/workspace/templates', '--location=us-west1', '--cluster=development-us-west1']
   wait_for: ['template']
 
 # images:
