@@ -5,7 +5,8 @@ metadata:
 spec:
   replicas: {{ .Values.replicas }}
   selector:
-    app: {{ .Values.appName }}
+    matchLabels:
+      app: {{ .Values.appName }}
   template:
     spec:
       securityContext:
