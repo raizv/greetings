@@ -3,7 +3,9 @@ steps:
   name: 'gcr.io/kaniko-project/executor'
   args: [
     '--destination=gcr.io/$PROJECT_ID/greetings:$SHORT_SHA',
-    '--cache=true' ]
+    '--cache=true',
+    '--cache-ttl=12h',
+    '--verbosity=error' ]
 
 # - name: gcr.io/kaniko-project/executor:latest
 #   args: ["--dockerfile=<path to Dockerfile within the build context>",
