@@ -16,16 +16,11 @@ steps:
   - 'HOME=/app'
   wait_for: ['build']
 
-# push image to registry
-# - id: push
-#   name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA' ]
-#   wait_for: ['test']
-
 # render template for DEV environment
 - id: template
   name: 'gcr.io/$PROJECT_ID/helm'
-  args: ['template', 'greetings', 
+  args: [
+    'template', 'greetings', 
     '--output-dir', '.', 
     '--values', 'greetings/dev.yaml', 
     '--set', 'projectId=$PROJECT_ID', 
@@ -38,5 +33,8 @@ steps:
 # deploy to DEV environment
 - id: deploy-dev
   name: 'gcr.io/cloud-builders/gke-deploy'
-  args: ['apply', '--filename=greetings/templates', '--location=us-west1', '--cluster=development-us-west1']
+  args: [
+    'apply', '--filename=greetings/templates', 
+    '--location=us-west1', 
+    '--cluster=development-us-west1']
   wait_for: ['template']
