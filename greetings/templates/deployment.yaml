@@ -4,6 +4,8 @@ metadata:
   name: {{ .Values.appName }}
 spec:
   replicas: {{ .Values.replicas }}
+  selector:
+    app: {{ .Values.appName }}
   template:
     spec:
       securityContext:
