@@ -49,18 +49,21 @@ steps:
 # render template for DEV environment
 - id: template
   name: 'gcr.io/$PROJECT_ID/helm'
-  args: ['template', '--help']
-  # args: ['template', 'greetings', '--output-dir /workspace/templates', '--values', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
+  args: ['template', 'greetings', 
+    '--output-dir', 'templates', 
+    '--values', 'greetings/dev.yaml', 
+    '--set', 'projectId=$PROJECT_ID', 
+    '--set', 'appVersion=$SHORT_SHA']
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development-us-west1
   wait_for: ['push']
 
 # deploy to DEV environment
-# - id: deploy-dev
-#   name: 'gcr.io/cloud-builders/gke-deploy'
-#   args: ['apply', '--filename=/workspace/templates', '--location=us-west1', '--cluster=development-us-west1']
-#   wait_for: ['template']
+- id: deploy-dev
+  name: 'gcr.io/cloud-builders/gke-deploy'
+  args: ['apply', '--filename=templates', '--location=us-west1', '--cluster=development-us-west1']
+  wait_for: ['template']
 
 # images:
 # - 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
