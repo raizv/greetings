@@ -1,23 +1,31 @@
 steps:
+- id: build
+  name: 'gcr.io/kaniko-project/executor'
+  args: [
+    '--destination=gcr.io/$PROJECT_ID/greetings:$SHORT_SHA',
+    '--cache=true' ]
+
+# - name: gcr.io/kaniko-project/executor:latest
+#   args: ["--dockerfile=<path to Dockerfile within the build context>",
+#          "--context=dir://<path to build context>",
+#          "--destination=<gcr.io/$PROJECT/$IMAGE:$TAG>"]
+
 # pull the latest image
-- id: pull
-  name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    docker pull gcr.io/$PROJECT_ID/greetings:latest || exit 0
+# - id: pull
+#   name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     docker pull gcr.io/$PROJECT_ID/greetings:latest || exit 0
 
 # build image
-- id: build
-  name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/greetings:latest', '--cache-from', 'gcr.io/$PROJECT_ID/greetings:latest', '.' ]
-
-# tag image with git short_sha
-- id: tag
-  name: 'gcr.io/cloud-builders/docker'
-  args: [ 'tag', 'gcr.io/$PROJECT_ID/greetings:latest', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA' ]
-  wait_for: ['build']
+# - id: build
+#   name: 'gcr.io/cloud-builders/docker'
+#   args: [ 'build', 
+#     '-t', 'gcr.io/$PROJECT_ID/greetings:latest',
+#     '-t', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA',
+#     '--cache-from', 'gcr.io/$PROJECT_ID/greetings:latest', '.' ]
 
 # test image
 - id: test
@@ -25,7 +33,7 @@ steps:
   args: ['npx', '-v']
   env:
   - 'HOME=/app'
-  wait_for: ['tag']
+  wait_for: ['build']
 
 # push image to registry
 - id: push
@@ -41,17 +49,18 @@ steps:
 # render template for DEV environment
 - id: template
   name: 'gcr.io/$PROJECT_ID/helm'
-  args: ['template', 'greetings', '--output-dir /workspace/templates', '--values', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
+  args: ['template', '--help']
+  # args: ['template', 'greetings', '--output-dir /workspace/templates', '--values', 'greetings/dev.yaml', '--set', 'projectId=$PROJECT_ID', '--set', 'appVersion=$SHORT_SHA']
   env:
   - CLOUDSDK_COMPUTE_REGION=us-west1
   - CLOUDSDK_CONTAINER_CLUSTER=development-us-west1
   wait_for: ['push']
 
 # deploy to DEV environment
-- id: deploy-dev
-  name: 'gcr.io/cloud-builders/gke-deploy'
-  args: ['apply', '--filename=/workspace/templates', '--location=us-west1', '--cluster=development-us-west1']
-  wait_for: ['template']
+# - id: deploy-dev
+#   name: 'gcr.io/cloud-builders/gke-deploy'
+#   args: ['apply', '--filename=/workspace/templates', '--location=us-west1', '--cluster=development-us-west1']
+#   wait_for: ['template']
 
 # images:
 # - 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA'
