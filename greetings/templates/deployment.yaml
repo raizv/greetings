@@ -19,7 +19,7 @@ spec:
           image: "gcr.io/{{ .Values.projectId }}/greetings:{{ .Values.appVersion }}"
           env:
             - name: APP_ENV
-              value: APP_ENV
+              value: {{ .Values.environment }}
           ports:
             - containerPort: {{ .Values.port }}
           livenessProbe:
