@@ -1,6 +1,6 @@
-const newrelic = require('newrelic')
+require('newrelic')
 
-const traceAgent = require('@google-cloud/trace-agent').start({
+require('@google-cloud/trace-agent').start({
   ignoreUrls: ['/health'],
   serviceContext: {
     service: 'greetings'
@@ -9,10 +9,8 @@ const traceAgent = require('@google-cloud/trace-agent').start({
   }
 })
 
-if (process.env.NODE_ENV === 'prod') {
-  newrelic()
-  traceAgent()
-}
+// if (process.env.NODE_ENV === 'prod') {
+// }
 
 const config = require('./config')
 const server = require('./server')
