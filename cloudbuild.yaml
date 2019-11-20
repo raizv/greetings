@@ -41,10 +41,10 @@ steps:
   args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:$SHORT_SHA' ]
   wait_for: ['test']
 
-- id: push-latest
-  name: 'gcr.io/cloud-builders/docker'
-  args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:latest' ]
-  wait_for: ['tag']
+# - id: push-latest
+#   name: 'gcr.io/cloud-builders/docker'
+#   args: [ 'push', 'gcr.io/$PROJECT_ID/greetings:latest' ]
+#   wait_for: ['tag']
 
 # render template for DEV environment
 - id: template
